@@ -13,9 +13,10 @@ spec:
           containerName: backtrace-app
           image: vlussenburg/backtrace-app-web:1.0.0
           environment:
-            BACKTRACE_SERVER_URL: "{{BACKTRACE_SERVER_URL}}"
+            BACKTRACE_ENDPOINT: "{{BACKTRACE_ENDPOINT}}"
             BACKTRACE_TOKEN: "{{BACKTRACE_TOKEN}}"
-            PROJECT_VERSION: "1.0.0"
+            APPLICATION_VERSION: "1.0.0"
+            APPLICATION_NAME: "backtrace-app"
           showLogsAfter: "5"
           portBindings:
           - name: pm-8080
@@ -41,10 +42,8 @@ spec:
   - name: backtrace-app-dict
     type: udm.Dictionary
     entries:
-      BACKTRACE_SERVER_URL: "{{BACKTRACE_SERVER_URL}}"
-      BACKTRACE_TOKEN: "{{BACKTRACE_TOKEN}}"
-      PROJECT_VERSION: "1.0.0"
-      APPLICATION_NAME: "backtrace-app"
+      BACKTRACE_ENDPOINT: !value BACKTRACE_ENDPOINT
+      BACKTRACE_TOKEN: !value BACKTRACE_TOKEN
   - name: Environments/dev
     type: udm.Environment
     members:

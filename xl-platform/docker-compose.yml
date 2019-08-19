@@ -42,6 +42,9 @@ services:
       - "50000:50000"
     volumes:
       - 'jenkins_data:/bitnami'
+    environment:
+      - JENKINS_PASSWORD=${ADMIN_PASSWORD}
+      - JENKINS_USERNAME=admin
 
 volumes:
   jenkins_data:

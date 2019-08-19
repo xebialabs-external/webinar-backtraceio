@@ -3,9 +3,9 @@ kind: Templates
 spec:
 - name: Jenkins
   type: jenkins.Server
-  url:  http://ec2-18-191-174-205.us-east-2.compute.amazonaws.com:8080
-  username: vincent
-  password: admin123@
+  url:  http://ip-172-31-42-192.ec2.internal:8080
+  username: !value jenkins_username
+  password: !value jenkins_password
 - name: XL Deploy
   type: xldeploy.XLDeployServer
   url: !value xld_url
