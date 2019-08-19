@@ -17,10 +17,6 @@ xld_password =
 jira_username =
 jira_password =
 
-blackduck_password =
-
-seeker_token =
-
 snow_password =
 ```
 
