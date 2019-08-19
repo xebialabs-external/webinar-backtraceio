@@ -1,8 +1,4 @@
-# webinar-synopsys
-
-# Manual setup steps (existing Jenkins)
-
-1. Get access to [Seeker](https://seeker-vm.synopsys-alliances.com:8443/login)
+# webinar-backtrace
 
 # One time setup
 
@@ -36,15 +32,3 @@ snow_password =
 1. Run `docker-compose build` the docker containers should be built
 
 1. `docker-compose up -d` 
-
-
-```
-
-The filters to surface would be, 
-“Severity (enumeration)“, 
-“Seeker Verified (true/false)“, 
-Important: Version (free form text)
-
-
-Nice to have: Checkers (multi selection list), date/time range 
-```
