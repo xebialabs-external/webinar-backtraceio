@@ -3,12 +3,13 @@ kind: Templates
 spec:
 - name: Jenkins
   type: jenkins.Server
-  url:  http://ip-172-31-42-192.ec2.internal:8080
+  # to prevent circular reference in docker network, use 'external address'
+  url:  http://ip-172-31-42-192.ec2.internal:80
   username: !value jenkins_username
   password: !value jenkins_password
 - name: XL Deploy
   type: xldeploy.XLDeployServer
-  url: !value xld_url
+  url: http://xld:4516
   username: !value xld_username
   password: !value xld_password
 - name: Xebialabs JIRA

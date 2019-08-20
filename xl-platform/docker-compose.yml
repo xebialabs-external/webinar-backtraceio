@@ -35,8 +35,18 @@ services:
      - "5516:5516"
 
   jenkins:
-    build: jenkins
+    build: 
+      context: jenkins
+      args:
+        xld_password: ${ADMIN_PASSWORD}
+        xlr_password: ${ADMIN_PASSWORD}
+        jenkins_password: ${ADMIN_PASSWORD}
+        DOCKER_USER: ${DOCKER_USER}
+        DOCKER_PASS: ${DOCKER_PASS}
     ports:
       - "80:8080"
       - "443:8443"
       - "50000:50000"
+    links:
+     - xld
+     - xlr

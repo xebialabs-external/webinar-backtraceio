@@ -1,5 +1,4 @@
 
-xld_url = http://ip-172-31-42-192.ec2.internal:4516
 xld_username = admin
 
 snow_url = https://dev55822.service-now.com/

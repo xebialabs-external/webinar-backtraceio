@@ -43,8 +43,7 @@ jobs:
         branchSources {
           git {
             id = 'BacktraceApp'
-            remote('https://github.com/abelmathew/xebia-bt.git')
-            credentialsId('github-credentials')
+            remote('https://github.com/abelmathew/xebia-bt')
           }
         }
       }
@@ -63,3 +62,8 @@ credentials:
             id:       xlr
             username: admin
             password: ${xlr_password:-admin}
+        - usernamePassword:
+            scope:    GLOBAL
+            id:       docker-login
+            username: ${DOCKER_USER}
+            password: ${DOCKER_PASS}
