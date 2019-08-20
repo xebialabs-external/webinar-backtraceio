@@ -22,3 +22,9 @@ spec:
   username: !value snow_username
   password: !value snow_password
   useServicenowApp: "True"
+- name: backtraceio
+  type: backtraceio.Server
+  url: https://testing-xebialabs.sp.backtrace.io
+  username: !value backtrace_username
+  password: !value backtrace_password
+  universe: testing-xebialabs

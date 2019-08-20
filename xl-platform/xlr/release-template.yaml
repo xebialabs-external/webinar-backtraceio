@@ -1,0 +1,251 @@
+---
+apiVersion: xl-release/v1
+kind: Templates
+metadata:
+  home: Samples & Tutorials
+spec:
+- template: Sample Release Template with XL Deploy
+  description: Major and minor release template.
+  scheduledStartDate: 2019-07-26T20:36:40.357Z
+  dueDate: 2019-07-26T21:36:40.357Z
+  phases:
+  - phase: QA
+    tasks:
+    - name: Wait for dependencies
+      type: xlrelease.GateTask
+      team: Release mgmt.
+    - name: Version passes automated tests
+      type: xlrelease.GateTask
+      description: Select the proper version to test
+      team: QA
+      conditions:
+      - name: Automated regression tests are green
+        type: xlrelease.GateCondition
+      - name: Release Notifyes available
+        type: xlrelease.GateCondition
+    - name: Deploy package to the QA environment
+      type: xldeploy.Deploy
+      server: XL Deploy
+      deploymentPackage: ${packageId}
+      deploymentEnvironment: ${QA environment}
+      team: Dev
+    - name: Testing
+      type: xlrelease.ParallelGroup
+      tasks:
+      - name: Update test scenarios
+        type: xlrelease.Task
+        team: QA
+      - name: Regression tests
+        type: xlrelease.Task
+        team: QA
+    - name: Verify no Backtrace untriaged errors
+      type: backtraceio.CheckForErrors
+      server: backtraceio
+      projectKey: xebialabs
+      projectVersion: ${packageVersion}
+      hostname: abel-dev
+      threshold: "0"
+    - name: Sign off by QA
+      type: xlrelease.GateTask
+      team: QA
+      conditions:
+      - name: Notify developers
+        type: xlrelease.GateCondition
+      - name: Notify Ops
+        type: xlrelease.GateCondition
+    color: '#68b749'
+  - phase: UAT
+    tasks:
+    - name: Acceptance environment available
+      type: xlrelease.GateTask
+      team: Ops
+      conditions:
+      - name: Verify environment availability
+        type: xlrelease.GateCondition
+    - name: Deploy ${packageId} to UAT environment
+      type: xldeploy.Deploy
+      server: XL Deploy
+      deploymentPackage: ${packageId}
+      deploymentEnvironment: ${ACC environment}
+      team: Ops
+    - name: Testing
+      type: xlrelease.ParallelGroup
+      tasks:
+      - name: Execute performance test
+        type: xlrelease.Task
+        team: QA
+      - name: Execute UA test
+        type: xlrelease.Task
+        team: QA
+    - name: Verify no Backtrace untriaged errors
+      type: backtraceio.CheckForErrors
+      server: backtraceio
+      projectKey: xebialabs
+      projectVersion: ${packageVersion}
+      hostname: abel-dev
+      threshold: "0"
+    - name: Approve
+      type: xlrelease.GateTask
+      team: QA
+      conditions:
+      - name: Collect all signatures
+        type: xlrelease.GateCondition
+    color: '#ff9e3b'
+  - phase: Production
+    tasks:
+    - name: Ready to go?
+      type: xlrelease.GateTask
+      team: Release mgmt.
+    - name: Deploy ${packageId} to PROD
+      type: xldeploy.Deploy
+      server: XL Deploy
+      deploymentPackage: ${packageId}
+      deploymentEnvironment: Environments/dev
+      team: Ops
+    - name: Execute smoke tests
+      type: xlrelease.Task
+      team: QA
+    - name: Notification
+      type: xlrelease.ParallelGroup
+      tasks:
+      - name: Alert marketing
+        type: xlrelease.Task
+        team: Release mgmt.
+    color: '#dd4b39'
+  variables:
+  - type: xlrelease.StringVariable
+    key: ACC environment
+  - type: xlrelease.StringVariable
+    key: QA environment
+  - type: xlrelease.StringVariable
+    key: packageId
+  - type: xlrelease.StringVariable
+    key: packageVersion
+    value: 1.0.0
+  - type: xlrelease.StringVariable
+    key: application
+  riskProfile: Default risk profile
+- type: xlrelease.Dashboard
+  owner: admin
+  tiles:
+  - name: Release progress
+    type: xlrelease.ReleaseProgressTile
+  - name: Release summary
+    type: xlrelease.ReleaseSummaryTile
+  - name: Resource usage
+    type: xlrelease.ResourceUsageTile
+  - name: Release timeline
+    type: xlrelease.TimelineTile
+  - name: Release health
+    type: xlrelease.ReleaseHealthTile
+  parentTemplate: Configure XL Release
+- type: xlrelease.Dashboard
+  owner: admin
+  tiles:
+  - name: Release progress
+    type: xlrelease.ReleaseProgressTile
+  - name: Release summary
+    type: xlrelease.ReleaseSummaryTile
+  - name: Resource usage
+    type: xlrelease.ResourceUsageTile
+  - name: Release timeline
+    type: xlrelease.TimelineTile
+  - name: Release health
+    type: xlrelease.ReleaseHealthTile
+  parentTemplate: 'Deployment pattern: Blue / Green'
+- type: xlrelease.Dashboard
+  owner: admin
+  tiles:
+  - name: Release progress
+    type: xlrelease.ReleaseProgressTile
+  - name: Release summary
+    type: xlrelease.ReleaseSummaryTile
+  - name: Resource usage
+    type: xlrelease.ResourceUsageTile
+  - name: Release timeline
+    type: xlrelease.TimelineTile
+  - name: Release health
+    type: xlrelease.ReleaseHealthTile
+  parentTemplate: 'Deployment pattern: Canary Release'
+- type: xlrelease.Dashboard
+  owner: admin
+  tiles:
+  - name: Release progress
+    type: xlrelease.ReleaseProgressTile
+  - name: Release summary
+    type: xlrelease.ReleaseSummaryTile
+  - name: Resource usage
+    type: xlrelease.ResourceUsageTile
+  - name: Release timeline
+    type: xlrelease.TimelineTile
+  - name: Release health
+    type: xlrelease.ReleaseHealthTile
+  parentTemplate: Guided Tour for Release Managers
+- type: xlrelease.Dashboard
+  owner: admin
+  tiles:
+  - name: Release progress
+    type: xlrelease.ReleaseProgressTile
+  - name: Release summary
+    type: xlrelease.ReleaseSummaryTile
+  - name: Resource usage
+    type: xlrelease.ResourceUsageTile
+  - name: Release timeline
+    type: xlrelease.TimelineTile
+  - name: Release health
+    type: xlrelease.ReleaseHealthTile
+  parentTemplate: Sample Release Template
+- type: xlrelease.Dashboard
+  owner: admin
+  tiles:
+  - name: Release progress
+    type: xlrelease.ReleaseProgressTile
+    row: 3
+    col: 2
+  - name: Release summary
+    type: xlrelease.ReleaseSummaryTile
+    row: 2
+    col: 2
+  - name: Release timeline
+    type: xlrelease.TimelineTile
+    row: 0
+  - name: Release health
+    type: xlrelease.ReleaseHealthTile
+    row: 1
+  - name: JIRA issues
+    type: jira.JiraQueryTile
+    row: 4
+    col: 2
+    jiraServer: Xebialabs JIRA
+    query: project = SAN
+  - name: Deployed versions on QA
+    type: xld.XLDVersionsTile
+    row: 5
+    col: 1
+    xldeployServer: XL Deploy
+    environment: Environments/dev
+  - name: Deployed versions UAT
+    type: xld.XLDVersionsTile
+    row: 5
+    col: 2
+    xldeployServer: XL Deploy
+    environment: Environments/dev
+  - name: XL Deploy deployments
+    type: xlrelease.XLDeployTile
+    row: 5
+    col: 0
+  parentTemplate: Sample Release Template with XL Deploy
+- type: xlrelease.Dashboard
+  owner: admin
+  tiles:
+  - name: Release progress
+    type: xlrelease.ReleaseProgressTile
+  - name: Release summary
+    type: xlrelease.ReleaseSummaryTile
+  - name: Resource usage
+    type: xlrelease.ResourceUsageTile
+  - name: Release timeline
+    type: xlrelease.TimelineTile
+  - name: Release health
+    type: xlrelease.ReleaseHealthTile
+  parentTemplate: Welcome to XL Release!
