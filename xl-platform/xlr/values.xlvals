@@ -1,12 +1,6 @@
 
-xld_url = http://ec2-34-226-204-140.compute-1.amazonaws.com:4516
+xld_url = http://ip-172-31-42-192.ec2.internal:4516
 xld_username = admin
-
-blackduck_url = https://bizdevhub.blackducksoftware.com 
-blackduck_username = XebiaLabs
-
-seeker_url = http://ec2-18-218-251-228.us-east-2.compute.amazonaws.com:8080/
-seeker_username = xebialabs
 
 snow_url = https://dev55822.service-now.com/
 snow_username = admin
