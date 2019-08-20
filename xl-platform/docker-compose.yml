@@ -35,17 +35,8 @@ services:
      - "5516:5516"
 
   jenkins:
-    image: bitnami/jenkins:2
+    build: jenkins
     ports:
       - "80:8080"
       - "443:8443"
       - "50000:50000"
-    volumes:
-      - 'jenkins_data:/bitnami'
-    environment:
-      - JENKINS_PASSWORD=${ADMIN_PASSWORD}
-      - JENKINS_USERNAME=admin
-
-volumes:
-  jenkins_data:
-    driver: local
