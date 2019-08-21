@@ -11,9 +11,12 @@ spec:
   phases:
   - phase: QA
     tasks:
-    - name: Wait for dependencies
-      type: xlrelease.GateTask
-      team: Release mgmt.
+    - name: Deploy package to the QA environment
+      type: xldeploy.Deploy
+      server: XL Deploy
+      deploymentPackage: ${packageId}
+      deploymentEnvironment: ${QA environment}
+      team: Dev
     - name: Version passes automated tests
       type: xlrelease.GateTask
       description: Select the proper version to test
@@ -23,12 +26,6 @@ spec:
         type: xlrelease.GateCondition
       - name: Release Notifyes available
         type: xlrelease.GateCondition
-    - name: Deploy package to the QA environment
-      type: xldeploy.Deploy
-      server: XL Deploy
-      deploymentPackage: ${packageId}
-      deploymentEnvironment: ${QA environment}
-      team: Dev
     - name: Testing
       type: xlrelease.ParallelGroup
       tasks:
