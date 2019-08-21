@@ -40,7 +40,7 @@ spec:
       server: backtraceio
       projectKey: xebialabs
       projectVersion: ${packageVersion}
-      hostname: abel-dev
+      hostname:
       threshold: "0"
     - name: Sign off by QA
       type: xlrelease.GateTask
@@ -79,7 +79,7 @@ spec:
       server: backtraceio
       projectKey: xebialabs
       projectVersion: ${packageVersion}
-      hostname: abel-dev
+      hostname:
       threshold: "0"
     - name: Approve
       type: xlrelease.GateTask
