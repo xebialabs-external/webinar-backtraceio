@@ -45,6 +45,9 @@ jobs:
             id = 'BacktraceApp'
             remote('https://github.com/abelmathew/xebia-bt')
           }
+          triggers {
+            periodic(1)
+          }
         }
       }
 
@@ -67,3 +70,11 @@ credentials:
             id:       docker-login
             username: ${DOCKER_USER}
             password: ${DOCKER_PASS}
+
+unclassified:
+  xLReleaseNotifier:
+    credentials:
+    - credentialsId: "xlr"
+      name: "xlr"
+      useGlobalCredential: true
+    xlReleaseServerUrl: "http://xlr:5516"

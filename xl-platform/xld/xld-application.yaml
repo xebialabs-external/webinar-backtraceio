@@ -22,7 +22,7 @@ spec:
           - name: pm-8080
             type: docker.PortSpec
             hostPort: "8080"
-            containerPort: "8080"
+            containerPort: "5000"
 ---
 
 apiVersion: xl-deploy/v1
