@@ -25,7 +25,7 @@ spec:
   useServicenowApp: "True"
 - name: backtraceio
   type: backtraceio.Server
-  url: https://testing-xebialabs.sp.backtrace.io
+  url: https://testing-xebialabs2.sp.backtrace.io
   username: !value backtrace_username
   password: !value backtrace_password
   universe: testing-xebialabs
